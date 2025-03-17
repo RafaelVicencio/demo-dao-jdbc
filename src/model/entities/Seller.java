@@ -76,8 +76,6 @@ public class Seller implements Serializable{
 		this.department = department;
 	}
 
-	
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
