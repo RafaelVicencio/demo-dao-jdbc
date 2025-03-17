@@ -11,5 +11,4 @@ public interface DepartmentDao {
 	void DeleteById(Integer id);
 	Department findById(Integer id);
 	List<Department> findAll();
-	
 }
