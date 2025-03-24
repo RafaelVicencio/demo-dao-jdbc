@@ -2,15 +2,19 @@ package application;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import model.dao.DaoFactory;
 import model.dao.SellerDao;
+import model.dao.impl.NotFoundException;
 import model.entities.Department;
 import model.entities.Seller;
 
 public class Program {
 
 	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
 		
 		SellerDao sellerDao = DaoFactory.createSellerDao();
 		
@@ -42,7 +46,17 @@ public class Program {
 		sellerDao.update(seller);
 		System.out.println("Update completed");
 		
+		System.out.println("\n=== TEST 6: seller Delete ===");
+		System.out.println("Enter id for delete test: ");
+		int id = sc.nextInt();
+		try {
+			sellerDao.DeleteById(id);
+			System.out.println("Delete completed!");
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
 		
+		sc.close();
 		
 	}
 }

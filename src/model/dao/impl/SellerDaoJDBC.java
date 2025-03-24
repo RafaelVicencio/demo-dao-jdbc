@@ -61,8 +61,7 @@ public class SellerDaoJDBC implements SellerDao{
 
 	@Override
 	public void update(Seller obj) {
-PreparedStatement st = null;
-		
+		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
 					  "UPDATE seller "
@@ -79,14 +78,32 @@ PreparedStatement st = null;
 			
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		} finally{
+		} finally {
 			DB.closeStatement(st);
 		}
 	}
 
 	@Override
-	public void DeleteById(Integer id) {
-		
+	public void DeleteById(Integer id) throws NotFoundException {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"DELETE FROM seller "
+					+ "WHERE Id =?");
+			st.setInt(1, id);
+			int rows = st.executeUpdate();
+			
+			if(rows == 0) {
+				throw new NotFoundException("No records found with ID: " + id);
+			}
+			
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		 } catch (NotFoundException e) {
+		        throw e; 
+		} finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
